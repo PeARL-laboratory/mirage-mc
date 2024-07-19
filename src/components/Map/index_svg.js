@@ -118,7 +118,7 @@ export default function  Map ({locs,height,width,highlight}) {
 
     let layout = {
         paper_bgcolor:theme.palette.background.paper,
-        plot_bgcolor:'rgba(0,0,0,0)',//theme.palette.background.paper,
+        plot_bgcolor:theme.palette.background.paper,
         autoscale: false,
         height:height,
         width:width,

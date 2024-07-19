@@ -42,6 +42,7 @@ import {fields, fieldsWithoutSelected} from "../../components/EventTable/fields"
 import SongListDetail from "../../components/SongListDetail";
 import {useLog} from "../../Providers/Firebase";
 import {useLocation} from "react-router-dom";
+import VizPanel from 'components/VizPanel';
 
 function getWindowDimensions() {
     const { innerWidth: width, innerHeight: height } = window;
@@ -69,7 +70,7 @@ const LandingPage = () => {
         eventMap:{key:"Event List Map",val:true},
         mediaDetail:{key:"Listen",val:true},
         eventSelectedList:{key:"Selected Events",val:true},
-        eventListDetail:{key:"Event List Details",val:true},
+        eventListDetail:{key:"Event List Visualization",val:true},
     });
     const toolbarRef = useRef(null);
     const layoutRef = useRef(null);
@@ -233,7 +234,7 @@ const LandingPage = () => {
                                 },
                                 {
                                     type: "tab",
-                                    name: "Event List Detail",
+                                    name: "Event List Visualization",
                                     component: "eventListDetail",
                                 }
                             ]
@@ -271,7 +272,7 @@ const LandingPage = () => {
                                    mainurl={location}
                 />;
             case 'eventListDetail':
-                return <SongListDetail countries={isFullView?getList('countries_full'):getList('countries')}/>;
+                return <VizPanel countries={isFullView?getList('countries_full'):getList('countries')}/>;
             case 'eventSelectedList':
                 return <EventTable id='eventSelectedListTable'
                                    data={eventSelectedData}

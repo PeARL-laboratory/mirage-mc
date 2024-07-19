@@ -160,7 +160,7 @@ const Provider = ({  children }) => {
                 console.timeEnd('Load and process data');
             });
             // load export list
-            d3csv(exportVariable,(data)=>{
+            d3csv(exportVariable).then((data)=>{
                 const event_export_list={};
                 data.forEach(d=>{
                     if (d["cut from export?"]==="N")
@@ -241,9 +241,13 @@ const Provider = ({  children }) => {
     const requestEvents = useCallback(
         (filter,limit,isid) => {
             dispatch({type: 'LOADING_CHANGED', path: 'events', isLoading: true});
-            let query = {filter};
+            let query = {filter,headers: {
+                'Accept-Encoding': 'gzip',
+              },};
             if (isid)
-                query={id:filter};
+                query={id:filter,headers: {
+                    'Accept-Encoding': 'gzip',
+                  },};
             axios.post(`${APIUrl}/meta/`, query).then(({data})=> {
                 dispatch({type: 'VALUE_CHANGE', path: 'events', value:data??[], isLoading: false});
             }).catch(error=>{
