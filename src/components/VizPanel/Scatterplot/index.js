@@ -59,6 +59,7 @@ export default function ({
         margin: { t: 10, r: 10 },
         paper_bgcolor: theme.palette.background.paper,
         plot_bgcolor: "rgba(0,0,0,0)", //theme.palette.background.paper,
+        showlegend: false,
       }}
       style={{ width: "100%", height: "100%" }}
       config={{

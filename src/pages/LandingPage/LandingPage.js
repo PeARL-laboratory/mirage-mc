@@ -116,7 +116,7 @@ const LandingPage = () => {
   const query = useQuery();
   const location = useLocation();
   const [vizsource, setVizSource] = useState("event");
-  const [meanradar, setMeanradar] = useState({});
+
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -180,7 +180,7 @@ const LandingPage = () => {
     metricRadarList.forEach(({ key }) => {
       meanradar[key] = d3mean(total, (d) => d[key]);
     });
-    setMeanradar(meanradar);
+    return meanradar;
   }, [getList("vizdata")]);
 
   // const onTogleWin = useCallback((key)=>{
@@ -390,7 +390,7 @@ const LandingPage = () => {
             events={getEvents()}
             locs={getList("locs")}
             sx={{ height: "100%", position: "relative" }}
-            meanradar={meanradar}
+            meanradar={meanRadar}
             // onTogleWin={()=>onTogleWin("eventDetail")}
           />
         );
