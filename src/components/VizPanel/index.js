@@ -1,39 +1,80 @@
 import SongListDetail from "../SongListDetail";
-import React, {useState} from "react";
-import {Grid, MenuItem, TextField} from "@mui/material";
+import React, { useCallback, useEffect, useState } from "react";
+import { Divider, Grid, MenuItem, TextField } from "@mui/material";
 import Histogram from "./Histogram";
+import { metricList } from "../../Providers/Database/ulti";
+import Scatterwrapper from "./Scatterwrapper";
+import PCAplot from "./PCAplot";
 
-export default function ({countries}) {
-    const [source,setSource] = useState("event");
-    return <Grid container sx={{position:'relative',height:'100%'}}>
-        <Grid item xs={4}>
-            <SongListDetail countries={countries}/>
+function VizPanel({ countries, data, source, onChangeSource, onSelect }) {
+  const [histindata, sethisindata] = useState([]);
+  const [hovered, sethovered] = useState(null);
+  useEffect(() => {
+    const histindata = metricList.map(({ key, label }) => ({
+      key,
+      label,
+      data: data.map((d) => d[key]),
+    }));
+    sethisindata(histindata);
+  }, [data]);
+  const onHover = useCallback((data) => {
+    sethovered(data);
+  }, []);
+  return (
+    <Grid container sx={{ position: "relative", height: "100%" }} spacing={1}>
+      <Grid item xs={3}>
+        <SongListDetail countries={countries} />
+      </Grid>
+      <Grid item xs={9}>
+        <Grid container spacing={{ xs: 2, md: 3 }}>
+          <Grid item xs={12}>
+            <TextField
+              id="viz-selection-source"
+              select
+              label="Viz source"
+              value={source}
+              variant="standard"
+              fullWidth
+              onChange={(event) => {
+                onChangeSource(event.target.value);
+              }}
+            >
+              <MenuItem value="event">Event list</MenuItem>
+              <MenuItem value="selected">Selected list</MenuItem>
+            </TextField>
+          </Grid>
+          <Grid item xs={12} container justifyContent="center" spacing={1}>
+            {histindata.map(({ key, label, data }) => (
+              <Grid key={key} item style={{ height: 100, width: 300 }}>
+                <Histogram name={label} data={data} />
+              </Grid>
+            ))}
+          </Grid>
+          <Grid item xs={12}>
+            <Divider />
+          </Grid>
+          <Grid item xs={6}>
+            <Scatterwrapper
+              data={data}
+              selectList={metricList}
+              onSelect={onSelect}
+              onHover={onHover}
+              hovered={hovered}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <PCAplot
+              data={data}
+              selectList={metricList}
+              onSelect={onSelect}
+              onHover={onHover}
+              hovered={hovered}
+            />
+          </Grid>
         </Grid>
-        <Grid item xs={8}>
-            <Grid container>
-                <Grid item xs={12}>
-                    <TextField
-                        id="viz-selection-source"
-                        select
-                        label="Viz source"
-                        value={source}
-                        variant="standard"
-                        fullWidth
-                        onChange={(event) => {
-                            setSource(event.target.value);
-                    }}
-                    >
-                        <MenuItem value="event">Event list</MenuItem>
-                        <MenuItem value="selected">Selected list</MenuItem>
-                    </TextField>
-                </Grid>
-                <Grid item xs={6}>
-                    <Histogram name="aa" data={[1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5]}/>
-                </Grid>
-                <Grid item xs={6}>
-
-                </Grid>
-            </Grid>
-        </Grid>
+      </Grid>
     </Grid>
+  );
 }
+
+export default VizPanel;
