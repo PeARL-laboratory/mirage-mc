@@ -12,6 +12,7 @@ export default function ({
   onSelect,
   onHover,
   hovered,
+  color,
 }) {
   const theme = useTheme();
   const [_data, set_Data] = useState([]);
@@ -22,6 +23,10 @@ export default function ({
         y: data.y,
         type: "scatter",
         mode: "markers",
+        marker: {
+          color: color ?? undefined,
+          size: 5,
+        },
       },
     ];
     if (hovered)
@@ -30,11 +35,18 @@ export default function ({
         y: hovered.y,
         type: "scatter",
         mode: "markers",
-        marker: { color: "red" },
+        marker: {
+          color: "rgba(0,0,0,0)",
+          size: 8,
+          line: {
+            color: "white", // Màu viền
+            width: 2, // Độ rộng viền
+          },
+        },
         hoverinfo: "skip",
       });
     set_Data(trace);
-  }, [data, hovered]);
+  }, [data, hovered, color]);
   const handleSelected = (event) => {
     const points = event.points;
     const selected = {};

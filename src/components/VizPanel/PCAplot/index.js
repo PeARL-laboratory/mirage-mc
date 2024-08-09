@@ -13,11 +13,12 @@ import { PCA } from "ml-pca";
 import Scatterplot from "../Scatterplot";
 import AutoSizer from "lp-react-virtualized-auto-sizer-react-18";
 
-function PCAplot({ data, selectList, onSelect, onHover, hovered }) {
+function PCAplot({ data, selectList, onSelect, onHover, hovered, getColor }) {
   const [axis, setAxis] = useState(selectList.map((d) => d.key));
-  const [scatterdata, setScatterdata] = useState({ x: [], y: [] });
+  const [scatterdata, setScatterdata] = useState({ x: [], y: [], data: [] });
   const [highlight, sethighlight] = useState({ x: [], y: [], data: [] });
   const [pcaob, setpcaob] = useState();
+  const [color, setcolor] = useState([]);
   const selectListMap = useMemo(() => {
     const m = {};
     selectList.forEach((d) => {
@@ -47,6 +48,7 @@ function PCAplot({ data, selectList, onSelect, onHover, hovered }) {
       // PCA 2 comp
       const principalComponent1 = result.data.map((row) => row[0]);
       const principalComponent2 = result.data.map((row) => row[1]);
+
       const explain = pca.getExplainedVariance();
       const scatterdata = {
         x: principalComponent1,
@@ -58,10 +60,13 @@ function PCAplot({ data, selectList, onSelect, onHover, hovered }) {
       setpcaob(pca);
       setScatterdata(scatterdata);
     } catch (e) {
-      setScatterdata({ x: [], y: [], xname: "PC1", yname: "PC2" });
+      setScatterdata({ x: [], y: [], data: [], xname: "PC1", yname: "PC2" });
       setpcaob(null);
     }
   }, [data, axis]);
+  useEffect(() => {
+    setcolor(scatterdata.data.map((row) => getColor.getColor(row)));
+  }, [scatterdata.data, getColor]);
   useEffect(() => {
     if (hovered && pcaob)
       try {
@@ -129,6 +134,7 @@ function PCAplot({ data, selectList, onSelect, onHover, hovered }) {
                 data={scatterdata}
                 xname={scatterdata.xname}
                 yname={scatterdata.yname}
+                color={color}
                 width={width}
                 height={width}
                 onSelect={onSelect}

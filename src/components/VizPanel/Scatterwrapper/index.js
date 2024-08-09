@@ -3,13 +3,21 @@ import React, { useEffect, useMemo, useState } from "react";
 import Scatterplot from "../Scatterplot";
 import AutoSizer from "lp-react-virtualized-auto-sizer-react-18";
 
-function Scatterwrapper({ data, selectList, onSelect, onHover, hovered }) {
+function Scatterwrapper({
+  data,
+  selectList,
+  onSelect,
+  onHover,
+  hovered,
+  getColor,
+}) {
   const [axis, setAxis] = useState({
     x: selectList[0].key,
     y: selectList[1].key,
   });
   const [scatterdata, setScatterdata] = useState({ x: [], y: [], data: [] });
   const [highlight, sethighlight] = useState({ x: [], y: [], data: [] });
+  const [color, setcolor] = useState([]);
   const selectListMap = useMemo(() => {
     const m = {};
     selectList.forEach((d) => {
@@ -26,6 +34,10 @@ function Scatterwrapper({ data, selectList, onSelect, onHover, hovered }) {
     });
     setScatterdata(scatterdata);
   }, [axis, data]);
+  useEffect(() => {
+    if (scatterdata.data)
+      setcolor(scatterdata.data.map((d) => getColor.getColor(d)));
+  }, [scatterdata, getColor]);
   useEffect(() => {
     if (hovered)
       sethighlight({
@@ -92,6 +104,7 @@ function Scatterwrapper({ data, selectList, onSelect, onHover, hovered }) {
                 onSelect={onSelect}
                 onHover={onHover}
                 hovered={highlight}
+                color={color}
               />
             );
           }}

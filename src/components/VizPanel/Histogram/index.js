@@ -31,7 +31,7 @@ export default function ({ data, name }) {
           size: theme.typography.fontSize,
           color: theme.palette.text.primary,
         },
-        margin: { t: 10, r: 10, l: 10, b: 30 },
+        margin: { t: 10, r: 10, l: 10, b: 40 },
         paper_bgcolor: theme.palette.background.paper,
         plot_bgcolor: "rgba(0,0,0,0)", //theme.palette.background.paper,
       }}
