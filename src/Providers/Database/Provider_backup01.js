@@ -6,13 +6,15 @@ import {
   mean as d3mean,
   csv as d3csv,
 } from "d3";
+import full_countries from "./data/mirage-mc-v1.countries.json";
+import full_location from "./data/mirage-mc-v1.locs.json";
 import axios from "axios";
 import lzString from "lz-string";
 import { useDispatch, useSelector } from "react-redux";
 import { setFilters, selectFilters } from "../../reducer/streamfilters";
 import { actionCreators } from "../../reducer/actions/selectedList";
 import exportVariable from "./data/MIRAGE_exportvariables.csv";
-import locationData from "./data/location.json";
+// import location from "./data/location.json";
 
 const APIKey = process.env.REACT_APP_DATA_API;
 const APIUrl =
@@ -60,6 +62,8 @@ const init = {
   fields: { value: { stationData: [], locationData: [] } },
   locs: {},
   countries: {},
+  locs_full: { value: full_location },
+  countries_full: { value: full_countries },
   events: {},
   vizdata: {},
   event_export_list: { value: {} },
@@ -114,7 +118,13 @@ const Provider = ({ children }) => {
             signal: controllerL.signal,
           })
           .then(({ data }) => data),
-      ]).then(([_city, stationFields, locationFields]) => {
+        axios
+          .get(`${APIUrl}/location/`, {
+            signal: controllerL.signal,
+          })
+          .then(({ data }) => data),
+        // ]).then(([locs, countries,stationFields,locationFields]) => {
+      ]).then(([_city, stationFields, locationFields, locationData]) => {
         console.timeEnd("-Load data-");
         const byLocName = {};
         locationData.forEach((d) => {

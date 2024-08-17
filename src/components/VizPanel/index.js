@@ -95,9 +95,9 @@ function VizPanel({ countries, data, source, onChangeSource, onSelect }) {
   }, [rankdata]);
   return (
     <Grid container sx={{ position: "relative", height: "100%" }} spacing={1}>
-      <Grid item xs={3}>
+      {/* <Grid item xs={3}>
         <SongListDetail countries={countries} />
-      </Grid>
+      </Grid> */}
       <Grid item xs={9}>
         <Grid container spacing={{ xs: 2, md: 3 }} sx={{ pt: 2 }}>
           <Grid item xs={12}>

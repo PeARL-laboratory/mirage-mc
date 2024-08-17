@@ -92,7 +92,6 @@ const LandingPage = () => {
     requestVizdata,
   } = useDatabase();
   const [zoomLoc, setZoomLoc] = useState();
-  const [isFullView, setIsFullView] = useState(true);
   const [windowDimensions, setWindowDimensions] = useState(
     getWindowDimensions()
   );
@@ -312,13 +311,6 @@ const LandingPage = () => {
     dispatch(actionCreators.newList(getEvents()));
   }, [getEvents()]);
 
-  const getSwitchView = useCallback(
-    (newval) => {
-      if (newval !== undefined) setIsFullView(newval);
-      return isFullView;
-    },
-    [isFullView]
-  );
   const factory = (node) => {
     let component = node.getComponent();
     switch (component) {
@@ -342,9 +334,7 @@ const LandingPage = () => {
       case "eventListDetail":
         return (
           <VizPanel
-            countries={
-              isFullView ? getList("countries_full") : getList("countries")
-            }
+            countries={getList("countries")}
             data={getList("vizdata")}
             source={vizsource}
             onChangeSource={(source) => {
@@ -411,19 +401,14 @@ const LandingPage = () => {
             {({ height, width }) => {
               return (
                 <Earth3D
-                  locs={isFullView ? getList("locs_full") : getList("locs")}
-                  countries={
-                    isFullView
-                      ? getList("countries_full")
-                      : getList("countries")
-                  }
+                  locs={getList("locs")}
+                  countries={getList("countries")}
                   onSelect={onSelect}
                   onSelectLegend={setFuncCollection}
                   width={width}
                   height={height}
                   toolbarRef={toolbarRef}
                   zoomLoc={zoomLoc}
-                  getSwitchView={getSwitchView}
                 />
               );
             }}

@@ -1,22 +1,22 @@
 import { isArray } from "lodash";
 
 export const metricList = [
-  { key: "track_danceability", label: "Danceability", radar: true },
-  { key: "track_speechiness", label: "Speechiness", radar: true },
-  { key: "track_acousticness", label: "Acousticness", radar: true },
-  { key: "track_instrumentalness", label: "Instrumentalness", radar: true },
-  { key: "track_liveness", label: "Liveness", radar: true },
-  { key: "track_energy", label: "Energy" },
-  { key: "track_valence", label: "Valence" },
-  { key: "track_year_released", label: "Track Year Released" },
-  { key: "track_popularity", label: "Track Popularity" },
-  { key: "track_tempo", label: "Tempo" },
+  { key: "Track_SP_Danceability", label: "Danceability", radar: true },
+  { key: "Track_SP_Speechiness", label: "Speechiness", radar: true },
+  { key: "Track_SP_Acousticness", label: "Acousticness", radar: true },
+  { key: "Track_SP_Instrumentalness", label: "Instrumentalness", radar: true },
+  { key: "Track_SP_Liveness", label: "Liveness", radar: true },
+  { key: "Track_SP_Energy", label: "Energy" },
+  { key: "Track_SP_Valence", label: "Valence" },
+  { key: "Track_SP_Year", label: "Track Year Released" },
+  { key: "Track_SP_Popularity", label: "Track Popularity" },
+  { key: "Track_SP_Tempo", label: "Tempo" },
 ];
 
 export const metricRadarList = metricList.filter((d) => d.radar);
 
 export const rankMetricList = [
-  { key: "artist_genres", label: "Artist Genres", isArray: true },
-  { key: "artist_country", label: "Artist Country" },
-  { key: "track_key", label: "Track Key", isArray: true },
+  { key: "Artist_SP_Genre", label: "Artist Genres", isArray: true },
+  { key: "Artist_WD_Country", label: "Artist Country" },
+  { key: "Track_SP_Key", label: "Track Key", isArray: true },
 ];
