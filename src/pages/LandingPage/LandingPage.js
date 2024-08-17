@@ -59,7 +59,6 @@ import {
   fields,
   fieldsWithoutSelected,
 } from "../../components/EventTable/fields";
-import SongListDetail from "../../components/SongListDetail";
 import { useLog } from "../../Providers/Firebase";
 import { useLocation } from "react-router-dom";
 import VizPanel from "components/VizPanel";

@@ -98,7 +98,7 @@ function VizPanel({ countries, data, source, onChangeSource, onSelect }) {
       {/* <Grid item xs={3}>
         <SongListDetail countries={countries} />
       </Grid> */}
-      <Grid item xs={9}>
+      <Grid item xs={12} sx={{ p: 2 }}>
         <Grid container spacing={{ xs: 2, md: 3 }} sx={{ pt: 2 }}>
           <Grid item xs={12}>
             <TextField
