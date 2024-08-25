@@ -94,11 +94,15 @@ function VizPanel({ countries, data, source, onChangeSource, onSelect }) {
     });
   }, [rankdata]);
   return (
-    <Grid container sx={{ position: "relative", height: "100%" }} spacing={1}>
+    <Grid
+      container
+      sx={{ position: "relative", height: "100%", padding: 5 }}
+      spacing={1}
+    >
       {/* <Grid item xs={3}>
         <SongListDetail countries={countries} />
       </Grid> */}
-      <Grid item xs={12} sx={{ p: 2 }}>
+      <Grid item xs={12}>
         <Grid container spacing={{ xs: 2, md: 3 }} sx={{ pt: 2 }}>
           <Grid item xs={12}>
             <TextField
@@ -117,7 +121,14 @@ function VizPanel({ countries, data, source, onChangeSource, onSelect }) {
             </TextField>
           </Grid>
           <Grid item xs={12}>
-            <Divider>Track histogram</Divider>
+            <Divider>
+              <Typography
+                variant={"h3"}
+                sx={{ color: (theme) => theme.palette.text.primary }}
+              >
+                Track histogram
+              </Typography>
+            </Divider>
           </Grid>
           <Grid item xs={12} container justifyContent="center" spacing={1}>
             {histindata.map(({ key, label, data }) => (
