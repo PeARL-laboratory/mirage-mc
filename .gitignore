@@ -27,3 +27,4 @@ src/Providers/Database/data/Jan_24_2023/location.json
 src/Providers/Database/data/Jan_24_2023/meta.csv
 src/Providers/Database/data/Jan_24_2023/meta.json
 src/Providers/Database/data/Jan_24_2023/station.json
+.env
